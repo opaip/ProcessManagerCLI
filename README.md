@@ -1,4 +1,4 @@
-ExeProcessManager - مدیریت پیشرفته فرآیندها با Go
+ExeProcessManager - Advanced Process Management in Go
 <p align="center">
 <img src="https://placehold.co/600x300/1e293b/ffffff?text=ExeProcessManager&font=raleway" alt="Project Banner">
 </p>
@@ -10,45 +10,45 @@ ExeProcessManager - مدیریت پیشرفته فرآیندها با Go
 <a href="#"><img src="https://img.shields.io/badge/license-MIT-lightgrey.svg" alt="License"></a>
 </p>
 
-ExeProcessManager یک ابزار قدرتمند و سبک برای مدیریت و نظارت بر فرآیندهای سیستم است که با زبان Go نوشته شده. این پروژه به شما اجازه می‌دهد تا فرآیندهای خود را به صورت دستی یا زمان‌بندی شده اجرا کنید، وضعیت آن‌ها را مشاهده کرده و از طریق یک رابط خط فرمان (CLI) و یک API امن با آن‌ها تعامل داشته باشید.
+ExeProcessManager is a powerful and lightweight tool for managing and monitoring system processes, written in Go. This project allows you to run your processes manually or on a schedule, view their status, and interact with them through a Command-Line Interface (CLI) and a secure REST API.
 
-✨ قابلیت‌ها (Features)
-مدیریت کامل فرآیندها: افزودن، شروع، توقف، حذف و مشاهده وضعیت فرآیندها.
+✨ Features
+Full Process Lifecycle Management: Add, start, stop, remove, and view the status of processes.
 
-پایداری وضعیت (Persistence): وضعیت تمام فرآیندها روی دیسک ذخیره می‌شود تا پس از راه‌اندازی مجدد برنامه، اطلاعات از بین نرود.
+State Persistence: The state of all processes is saved to disk, ensuring no data is lost after an application restart.
 
-زمان‌بندی (Scheduling): قابلیت تعریف قوانین زمانی برای اجرای خودکار فرآیندها در آینده.
+Scheduling: Define timing rules to automatically execute processes at a future time.
 
-رابط دوگانه:
+Dual Interface:
 
-رابط خط فرمان (CLI): برای مدیریت مستقیم و سریع از طریق ترمینال.
+Command-Line Interface (CLI): For direct and fast management from the terminal.
 
-رابط وب (API): برای ادغام با سایر سرویس‌ها و مدیریت برنامه از راه دور.
+REST API: For integration with other services and remote management.
 
-امنیت API: تمام مسیرهای API با استفاده از کلیدهای مخفی (API Key) محافظت می‌شوند.
+API Security: All API routes are protected using secret API Keys.
 
-پیکربندی آسان: تمام تنظیمات برنامه از طریق یک فایل config.json مدیریت می‌شود.
+Easy Configuration: All application settings are managed through a single config.json file.
 
-لاگ‌گیری ساختاریافته: ثبت تمام رویدادها با فرمت استاندارد برای دیباگ و مانیتورینگ آسان.
+Structured Logging: All events are logged in a standard format for easy debugging and monitoring.
 
-خروج ایمن (Graceful Shutdown): برنامه به سیگنال‌های سیستم (Ctrl+C) گوش داده و به آرامی خاموش می‌شود تا از صحت داده‌ها اطمینان حاصل شود.
+Graceful Shutdown: The application listens for system signals (like Ctrl+C) and shuts down gracefully to ensure data integrity.
 
-تست‌های جامع: پوشش تست بالا برای اطمینان از پایداری و صحت عملکرد هسته برنامه.
+Comprehensive Tests: High test coverage to ensure the stability and correctness of the core application.
 
-🚀 شروع به کار (Getting Started)
-برای راه‌اندازی و اجرای پروژه، مراحل زیر را دنبال کنید.
+🚀 Getting Started
+Follow these steps to set up and run the project.
 
-پیش‌نیازها
-نصب بودن Go نسخه 1.21 یا بالاتر.
+Prerequisites
+Go version 1.21 or higher must be installed.
 
-نصب و راه‌اندازی
-کلون کردن پروژه:
+Installation & Setup
+Clone the repository:
 
 git clone <your-repository-url>
 cd ExeProcessManager
 
-پیکربندی برنامه:
-یک کپی از فایل config.json ایجاد کرده و مقادیر آن را مطابق نیاز خود تغییر دهید.
+Configure the application:
+Create a copy of the config.json file and modify its values according to your needs.
 
 {
   "data_directory": "./data",
@@ -61,75 +61,75 @@ cd ExeProcessManager
   ]
 }
 
-نکته مهم: کلیدهای api_keys را با مقادیر امن و تصادفی جایگزین کنید.
+Important: Replace the api_keys with your own secure, randomly generated keys.
 
-ساخت (Build) پروژه:
+Build the project:
 
 go build -o exepm .
 
-این دستور یک فایل اجرایی به نام exepm (در ویندوز exepm.exe) می‌سازد.
+This command creates an executable file named exepm (exepm.exe on Windows).
 
-اجرای برنامه:
+Run the application:
 
 ./exepm
 
-با اجرای این دستور، هم رابط خط فرمان و هم سرور API فعال می‌شوند.
+Running this command will activate both the CLI and the API server.
 
-🛠️ نحوه استفاده (Usage)
-رابط خط فرمان (CLI)
-پس از اجرای برنامه، می‌توانید دستورات زیر را در ترمینال وارد کنید:
+🛠️ Usage
+Command-Line Interface (CLI)
+After running the application, you can enter the following commands in your terminal:
 
-دستور
+Command
 
-توضیحات
+Description
 
 help
 
-نمایش لیست تمام دستورات موجود.
+Show the list of all available commands.
 
 list
 
-لیست تمام فرآیندهای مدیریت شده.
+List all managed processes.
 
 add <name> <path> <sch>
 
-افزودن یک فرآیند جدید (sch: 0=دستی, 1=خودکار).
+Add a new process (sch: 0=manual, 1=auto).
 
 start <name> [args...]
 
-شروع یک فرآیند دستی با نام مشخص.
+Start a manual process by its name.
 
 stop <name>
 
-توقف یک فرآیند در حال اجرا.
+Stop a running process.
 
 status <name>
 
-نمایش وضعیت دقیق یک فرآیند.
+Show the detailed status of a process.
 
 remove <name>
 
-حذف کامل یک فرآیند از سیستم مدیریت.
+Completely remove a process from the manager.
 
-رابط وب (API)
-تمام درخواست‌ها به API باید شامل هدر X-API-KEY با یک کلید معتبر باشند.
+REST API
+All requests to the API must include the X-API-KEY header with a valid key.
 
-مثال: دریافت لیست فرآیندها با curl
+Example: Get the list of processes with curl
 
-# کلید خود را در این متغیر قرار دهید
+# Set your API key in this variable
 API_KEY="your-secret-api-key-1"
 
 curl -H "X-API-KEY: $API_KEY" http://localhost:8080/processes
 
-مسیرهای اصلی API:
+Main API Endpoints:
 
-متد
+Method
 
-مسیر
+Path
 
-بدنه درخواست (JSON)
+Request Body (JSON)
 
-توضیحات
+Description
 
 GET
 
@@ -137,7 +137,7 @@ GET
 
 -
 
-دریافت لیست تمام فرآیندها.
+Get the list of all processes.
 
 POST
 
@@ -145,7 +145,7 @@ POST
 
 {"name": "...", "path": "...", "schedul": 0}
 
-افزودن یک فرآیند جدید.
+Add a new process.
 
 POST
 
@@ -153,7 +153,7 @@ POST
 
 {"name": "...", "args": ["..."]}
 
-شروع یک فرآیند.
+Start a process.
 
 POST
 
@@ -161,28 +161,28 @@ POST
 
 {"name": "..."}
 
-توقف یک فرآیند.
+Stop a process.
 
-✅ اجرای تست‌ها
-برای اطمینان از صحت عملکرد تمام بخش‌های پروژه، می‌توانید تست‌های واحد را اجرا کنید:
+✅ Running Tests
+To ensure all parts of the project are working correctly, you can run the unit tests:
 
 go test ./...
 
-🔮 کارهای آینده (Future Work)
-مانیتورینگ منابع: افزودن قابلیت رصد مصرف CPU و حافظه برای هر فرآیند.
+🔮 Future Work
+Resource Monitoring: Add the ability to monitor CPU and memory usage for each process.
 
-راه‌اندازی مجدد خودکار: پیاده‌سازی مکانیزم Auto-Restart برای فرآیندهایی که از کار می‌افتند.
+Auto-Restart: Implement an auto-restart mechanism for processes that crash.
 
-زمان‌بندی پیشرفته: پشتیبانی از قوانین زمان‌بندی به سبک Cron.
+Advanced Scheduling: Support Cron-style scheduling rules.
 
-رابط کاربری تحت وب (Web UI): ساخت یک داشبورد وب با React/Vue برای مدیریت گرافیکی فرآیندها.
+Web UI: Build a web-based dashboard with React/Vue for graphical process management.
 
-مدیریت لاگ‌ها: نمایش زنده لاگ‌های هر فرآیند در رابط کاربری وب.
+Log Management: Stream live logs from each process to the Web UI.
 
-سیستم اطلاع‌رسانی: ارسال هشدار از طریق Slack یا Telegram در صورت بروز خطا.
+Notification System: Send alerts via Slack or Telegram on process failure.
 
-🤝 مشارکت (Contributing)
-از مشارکت شما در این پروژه استقبال می‌شود. لطفاً برای ارسال Pull Request یا ثبت Issue، از طریق گیت‌هاب اقدام کنید.
+🤝 Contributing
+Contributions are welcome! Please feel free to submit a Pull Request or open an Issue on GitHub.
 
-📜 مجوز (License)
-این پروژه تحت مجوز MIT منتشر شده است. برای اطلاعات بیشتر فایل LICENSE را مطالعه کنید.
+📜 License
+This project is licensed under the MIT License. See the LICENSE file for more details.
