@@ -1,0 +1,6 @@
+{
+  "data_directory": "./data",
+  "schedule_directory": "./schu",
+  "log_level": "info",
+  "api_listen_address": ":8080"
+}
