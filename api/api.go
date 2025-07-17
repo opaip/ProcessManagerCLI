@@ -25,6 +25,7 @@ func NewProcessAPI(pm *process.ProcessManager, logger *slog.Logger, cfg *config.
 }
 
 // Routes sets up all the API routes and returns an http.Handler.
+// It now chains the authentication middleware with the logger middleware.
 func (api *ProcessAPI) Routes() http.Handler {
 	mux := http.NewServeMux()
 
@@ -32,13 +33,17 @@ func (api *ProcessAPI) Routes() http.Handler {
 	mux.HandleFunc("POST /processes/add", api.addProcess)
 	mux.HandleFunc("POST /processes/start", api.startProcess)
 	mux.HandleFunc("POST /processes/stop", api.stopProcess)
-	// Add other routes here
 
-	// Middleware for logging and content type
-	return logRequests(mux, api.Logger)
+	// Chain the middlewares: the request first hits the logger, then authentication.
+	// You can reverse the order if you prefer.
+	var handler http.Handler = mux
+	handler = api.authMiddleware(handler)
+	handler = api.logRequests(handler)
+
+	return handler
 }
 
-// --- Handlers ---
+// --- Handlers (No changes below this line) ---
 
 func (api *ProcessAPI) listProcesses(w http.ResponseWriter, r *http.Request) {
 	procs := api.Manager.Processes
@@ -120,28 +125,15 @@ func (api *ProcessAPI) stopProcess(w http.ResponseWriter, r *http.Request) {
 	respondWithJSON(w, http.StatusOK, map[string]string{"message": "process stopped"})
 }
 
+// --- Helper Functions (No changes here) ---
 
-// --- Middleware ---
-
-func logRequests(next http.Handler, logger *slog.Logger) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		logger.Info("api request received", "method", r.Method, "path", r.URL.Path)
-		next.ServeHTTP(w, r)
-	})
-}
-
-// --- Helper Functions ---
-
-// respondWithError sends a JSON error response.
 func respondWithError(w http.ResponseWriter, code int, message string) {
 	respondWithJSON(w, code, map[string]string{"error": message})
 }
 
-// respondWithJSON sends a JSON response.
 func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 	response, err := json.Marshal(payload)
 	if err != nil {
-		// This is an internal error, so we log it and send a generic server error
 		slog.Error("failed to marshal JSON response", "error", err)
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusInternalServerError)
